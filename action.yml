@@ -1,0 +1,47 @@
+# action.yml
+name: "Gitea Sync Secrets"
+author: Bo-Yi Wu
+branding:
+  icon: "copy"
+  color: "red"
+description: "Copies secrets from the action's environment to many other repos."
+inputs:
+  gitea_token:
+    description: "Token to use to get repos and write secrets"
+    required: true
+  gitea_server:
+    description: |
+      The URL of the Gitea server to use.
+    required: true
+  repos:
+    description: |
+      New line deliminated to select repositories to copy secrets to.
+    required: false
+  orgs:
+    description: |
+      New line deliminated to select organizations to copy secrets to.
+    required: false
+  gitea_skip_verify:
+    description: |
+      When set to `true`, the action will skip SSL verification when making requests
+      to the Gitea API. Defaults to `false`.
+    required: false
+  secrets:
+    description: |
+      New line deliminated regex expressions to select values from `process.env`.
+      Use the action env to pass secrets from the repository in which this action
+      runs with the `env` attribute of the step.
+    required: true
+  dry_run:
+    description: |
+      Run everything except for secret create and update functionality.
+    required: false
+  environment:
+    default: ""
+    description: |
+      If this value is set, the action will set the secrets to the repositories environment with the name of this value.
+      Only works if `target` is set to `actions` (default).
+    required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"

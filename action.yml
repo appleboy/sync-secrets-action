@@ -42,6 +42,10 @@ inputs:
       If this value is set, the action will set the secrets to the repositories environment with the name of this value.
       Only works if `target` is set to `actions` (default).
     required: false
+  description:
+    description: |
+      Optional description for the sync operation to help identify the purpose of this secrets synchronization.
+    required: false
 runs:
   using: "docker"
   image: "Dockerfile"

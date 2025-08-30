@@ -1,4 +1,4 @@
-FROM ghcr.io/appleboy/gitea-secret-sync:0.2.0
+FROM ghcr.io/appleboy/gitea-secret-sync:main
 
 COPY entrypoint.sh /bin/entrypoint.sh
 

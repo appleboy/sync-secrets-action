@@ -36,6 +36,11 @@ inputs:
     description: |
       Run everything except for secret create and update functionality.
     required: false
+  debug:
+    description: |
+      Enable debug mode to output detailed logging information for troubleshooting.
+    required: false
+    default: "false"
   environment:
     default: ""
     description: |

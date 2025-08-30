@@ -50,6 +50,7 @@ jobs:
             API_KEY
           dry_run: ${{ github.event.inputs.dry_run || 'true' }}
           description: "GitHub Actions test for gitea.com"
+          debug: true
 
   test-multiple-repos:
     name: Test Multiple Repositories
@@ -80,6 +81,7 @@ jobs:
             DOCKER_USERNAME
           dry_run: ${{ github.event.inputs.dry_run || 'true' }}
           description: "Multi-repository sync test"
+          debug: true
 
   test-org-sync:
     name: Test Organization Sync
@@ -106,3 +108,4 @@ jobs:
             SLACK_WEBHOOK
           dry_run: ${{ github.event.inputs.dry_run || 'true' }}
           description: "Organization sync test"
+          debug: true

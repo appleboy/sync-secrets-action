@@ -43,7 +43,7 @@ jobs:
           gitea_server: ${{ env.GITEA_SERVER }}
           gitea_token: ${{ secrets.GITEA_TOKEN }}
           repos: |
-            test-user/test-repo
+            appleboy/test2
           secrets: |
             TEST_SECRET_1
             TEST_SECRET_2
@@ -72,9 +72,9 @@ jobs:
           gitea_server: ${{ env.GITEA_SERVER }}
           gitea_token: ${{ secrets.GITEA_TOKEN }}
           repos: |
-            test-user/repo-1
-            test-user/repo-2
-            test-org/repo-3
+            appleboy/test2
+            appleboy/11111
+            appleboy/test
           secrets: |
             DATABASE_URL
             REDIS_URL
@@ -102,7 +102,7 @@ jobs:
           gitea_server: ${{ env.GITEA_SERVER }}
           gitea_token: ${{ secrets.GITEA_TOKEN }}
           orgs: |
-            test-org
+            go-training
           secrets: |
             SENTRY_DSN
             SLACK_WEBHOOK

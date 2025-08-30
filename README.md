@@ -112,12 +112,12 @@ jobs:
 |-------|-------------|----------|---------|
 | `gitea_token` | Token to use to get repositories and write secrets. Must have appropriate permissions. | ✅ | |
 | `gitea_server` | The URL of the Gitea server to use (e.g., `https://gitea.example.com`). | ✅ | |
-owner/repo`). | ❌ | |
+| `repos` | Newline-delimited list of repositories to copy secrets to (format: `owner/repo`). | ❌ | |
 | `orgs` | Newline-delimited list of organizations to copy secrets to. | ❌ | |
 | `gitea_skip_verify` | Skip SSL verification when making requests to the Gitea API. Set to `true` to disable SSL verification. | ❌ | `false` |
 | `secrets` | Newline-delimited list of secret names to select values from environment variables. Use the action env to pass secrets from the repository. | ✅ | |
 | `dry_run` | Run everything except for secret create and update functionality. Useful for testing. | ❌ | `false` |
-| `environment` | If set, the action will set the secrets to the repositories' environment with this name. Only works for Actions secrets. | ❌ | |
+| `environment` | If set, the action will set the secrets to the repositories' environment with this name. Only works for Actions secrets. | ❌ | `` |
 | `description` | Optional description for the sync operation to help identify the purpose of this secrets synchronization. | ❌ | |
 
 ## Requirements

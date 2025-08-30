@@ -1,5 +1,7 @@
 # Gitea Sync Secrets Action
 
+[English](README.md) | [繁體中文](README_zh-TW.md) | [简体中文](README_zh-CN.md)
+
 [![GitHub Release](https://img.shields.io/github/release/appleboy/sync-secrets-action.svg)](https://github.com/appleboy/sync-secrets-action/releases)
 
 A GitHub Action that automatically synchronizes secrets from one repository to multiple repositories or organizations in Gitea. This action helps you maintain consistent secrets across multiple projects without manual intervention.

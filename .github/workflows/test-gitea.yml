@@ -1,0 +1,108 @@
+
+name: Test Gitea Sync Secrets Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry run mode'
+        required: false
+        default: true
+        type: boolean
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+    paths:
+      - 'action.yml'
+      - 'Dockerfile'
+      - 'entrypoint.sh'
+
+env:
+  GITEA_SERVER: https://gitea.com
+
+jobs:
+  test-basic-sync:
+    name: Test Basic Repository Sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test sync to single repository
+        uses: ./
+        env:
+          TEST_SECRET_1: "test-value-1"
+          TEST_SECRET_2: "test-value-2"
+          API_KEY: "test-api-key"
+        with:
+          gitea_server: ${{ env.GITEA_SERVER }}
+          gitea_token: ${{ secrets.GITEA_TOKEN }}
+          repos: |
+            test-user/test-repo
+          secrets: |
+            TEST_SECRET_1
+            TEST_SECRET_2
+            API_KEY
+          dry_run: ${{ github.event.inputs.dry_run || 'true' }}
+          description: "GitHub Actions test for gitea.com"
+
+  test-multiple-repos:
+    name: Test Multiple Repositories
+    runs-on: ubuntu-latest
+    needs: test-basic-sync
+    if: success() || failure()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test sync to multiple repositories
+        uses: ./
+        env:
+          DATABASE_URL: "postgresql://test:test@localhost:5432/test"
+          REDIS_URL: "redis://localhost:6379/0"
+          DOCKER_USERNAME: "testuser"
+        with:
+          gitea_server: ${{ env.GITEA_SERVER }}
+          gitea_token: ${{ secrets.GITEA_TOKEN }}
+          repos: |
+            test-user/repo-1
+            test-user/repo-2
+            test-org/repo-3
+          secrets: |
+            DATABASE_URL
+            REDIS_URL
+            DOCKER_USERNAME
+          dry_run: ${{ github.event.inputs.dry_run || 'true' }}
+          description: "Multi-repository sync test"
+
+  test-org-sync:
+    name: Test Organization Sync
+    runs-on: ubuntu-latest
+    needs: test-basic-sync
+    if: success() || failure()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test organization sync
+        uses: ./
+        env:
+          SENTRY_DSN: "https://test@sentry.io/12345"
+          SLACK_WEBHOOK: "https://hooks.slack.com/test"
+        with:
+          gitea_server: ${{ env.GITEA_SERVER }}
+          gitea_token: ${{ secrets.GITEA_TOKEN }}
+          orgs: |
+            test-org
+          secrets: |
+            SENTRY_DSN
+            SLACK_WEBHOOK
+          dry_run: ${{ github.event.inputs.dry_run || 'true' }}
+          description: "Organization sync test"

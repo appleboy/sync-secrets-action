@@ -1,7 +1,6 @@
 # Gitea Sync Secrets Action
 
 [![GitHub Release](https://img.shields.io/github/release/appleboy/sync-secrets-action.svg)](https://github.com/appleboy/sync-secrets-action/releases)
-[![Docker Pulls](https://img.shields.io/docker/pulls/appleboy/gitea-secret-sync.svg)](https://hub.docker.com/r/appleboy/gitea-secret-sync/)
 
 A GitHub Action that automatically synchronizes secrets from one repository to multiple repositories or organizations in Gitea. This action helps you maintain consistent secrets across multiple projects without manual intervention.
 
@@ -106,6 +105,23 @@ jobs:
     dry_run: true
 ```
 
+### With Debug Logging
+
+```yaml
+- name: Sync secrets with debug logging
+  uses: appleboy/sync-secrets-action@v1
+  env:
+    API_KEY: ${{ secrets.API_KEY }}
+  with:
+    gitea_server: https://gitea.example.com
+    gitea_token: ${{ secrets.GITEA_TOKEN }}
+    repos: |
+      user/repo1
+    secrets: |
+      API_KEY
+    debug: true
+```
+
 ## Inputs
 
 | Input | Description | Required | Default |
@@ -119,6 +135,7 @@ jobs:
 | `dry_run` | Run everything except for secret create and update functionality. Useful for testing. | ❌ | `false` |
 | `environment` | If set, the action will set the secrets to the repositories' environment with this name. Only works for Actions secrets. | ❌ | `` |
 | `description` | Optional description for the sync operation to help identify the purpose of this secrets synchronization. | ❌ | |
+| `debug` | Enable debug mode to output detailed logging information for troubleshooting. | ❌ | `false` |
 
 ## Requirements
 
@@ -261,10 +278,25 @@ _KEY }}
 
 ### Debug Mode
 
-Enable debug logging by setting the `ACTIONS_STEP_DEBUG` secret to `true` in your repository:
+Enable detailed debug logging using the `debug` parameter:
 
 ```yaml
-- name: Enable debug logging
+- name: Sync with debug logging
+  uses: appleboy/sync-secrets-action@v1
+  with:
+    gitea_server: https://gitea.example.com
+    gitea_token: ${{ secrets.GITEA_TOKEN }}
+    repos: |
+      user/repo1
+    secrets: |
+      API_KEY
+    debug: true
+```
+
+You can also enable GitHub Actions debug logging by setting the `ACTIONS_STEP_DEBUG` secret to `true` in your repository:
+
+```yaml
+- name: Enable GitHub Actions debug logging
   env:
     ACTIONS_STEP_DEBUG: true
 ```

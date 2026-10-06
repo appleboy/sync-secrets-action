@@ -6,3 +6,9 @@ misconfigurations:
       GitHub Docker actions require root to access the mounted workspace and
       runner-owned output files. This exception applies only to the action image.
       https://docs.github.com/en/actions/reference/workflows-and-actions/dockerfile-support#user
+  - id: DS-0026
+    paths:
+      - Dockerfile
+    statement: >-
+      This is a short-lived GitHub action that exits after synchronizing secrets,
+      not a long-running service. A periodic container HEALTHCHECK is not applicable.

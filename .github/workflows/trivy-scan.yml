@@ -5,10 +5,10 @@ on:
     - cron: '0 0 * * *'
   pull_request:
     branches:
-      - master
+      - main
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -27,6 +27,7 @@ jobs:
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@v0.36.0
         with:
+          trivyignores: '.trivyignore.yaml'
           scan-type: 'fs'
           scan-ref: '.'
           scanners: 'vuln,secret,misconfig'
